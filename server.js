@@ -8,7 +8,9 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var port = 9000; 
 var led1,led2,led3,led4;
+var But1,But2,But3,But4;
 var ledData;
+var butData;
 // lights model 
 var lights = [          
             {id:'1', name:"Led1", status:"off", active:false},
@@ -17,6 +19,12 @@ var lights = [
             {id:'4', name:"Led4", status:"off", active:false}
             ];
 
+var buttons = [          
+            {id:'1', name:"But1", status:"off", active:false},
+            {id:'2', name:"But2", status:"off", active:false},
+            {id:'3', name:"But3", status:"off", active:false},
+            {id:'4', name:"But4", status:"off", active:false}
+            ];
 
 var DEBUG = false; //Debugage -> console node + navigateur web
 
@@ -33,6 +41,11 @@ app.get('/lights', function(req,res){
     res.send(lights);
 });
 
+app.get('/boutons', function(req,res){
+    'use strict';
+    res.send(boutons);
+});
+
 httpServer.listen(port);  
 console.log('Serveur Disponible à http://localhost:' + port);  
 
@@ -45,6 +58,13 @@ board.on("ready", function() {
     Led2 = new five.Led(12);
     Led3 = new five.Led(11);
     Led4 = new five.Led(10);
+
+    But1 = new five.Button("A3");
+    But2 = new five.Button("A2");
+    But3 = new five.Button("A1");
+    But4 = new five.Button("A0");
+
+
 });
 
 //Socket connection handler
