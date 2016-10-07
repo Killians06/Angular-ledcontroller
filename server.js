@@ -18,15 +18,15 @@ var lights = [
             {id:'4', name:"Led4", status:"off", active:false}
             ];
 
-var buttons = [          
-            {id:'1', name:"Button1", status:"off", active:false},
-            {id:'2', name:"Button2", status:"off", active:false},
-            {id:'3', name:"Button3", status:"off", active:false},
-            {id:'4', name:"Button4", status:"off", active:false}
-            ];
+// var buttons = [          
+//             {id:'1', name:"Button1", status:"off", active:false},
+//             {id:'2', name:"Button2", status:"off", active:false},
+//             {id:'3', name:"Button3", status:"off", active:false},
+//             {id:'4', name:"Button4", status:"off", active:false}
+//             ];
 
 
-var DEBUG = false; //Debugage -> console node + navigateur web
+var DEBUG = true; //Debugage -> console node + navigateur web
 
 
 app.use(express.static(__dirname + '/public'));
@@ -55,36 +55,48 @@ board.on("ready", function() {
     Led3 = new five.Led(11);
     Led4 = new five.Led(10);
 
-    // Attached to an analog pin
-    Button1 = new five.Button("A3");
-    Button2 = new five.Button("A2");
-    Button3 = new five.Button("A1");
-    Button4 = new five.Button("A0");
+    // // Attached to an analog pin
+    // Button1 = new five.Button("A3");
+    // Button2 = new five.Button("A2");
+    // Button3 = new five.Button("A1");
+    // Button4 = new five.Button("A0");
 
-    Button1.on("down", function() {
-    console.log( "Button1 Préssé" );
+    buttons = new five.Buttons({
+    pins: ["A3", "A2", "A1", "A0"],
     });
-    Button1.on("up", function() {
-    console.log( "Button1 Laché" );
+
+    buttons.on("press", function(button) {
+        console.log("Pressed: ", button.pin);
     });
-    Button2.on("down", function() {
-    console.log( "Button2 Préssé" );
+
+    buttons.on("release", function(button) {
+        console.log("Released: ", button.pin);
     });
-    Button2.on("up", function() {
-    console.log( "Button2 Laché" );
-    });
-    Button3.on("down", function() {
-    console.log( "Button3 Préssé" );
-    });
-    Button3.on("up", function() {
-    console.log( "Button3 Laché" );
-    });
-    Button4.on("down", function() {
-    console.log( "Button4 Préssé" );
-    });
-    Button4.on("up", function() {
-    console.log( "Button4 Laché" );
-    });
+
+    // Button1.on("down", function() {
+    // console.log( "Button1 Préssé" );
+    // });
+    // Button1.on("up", function() {
+    // console.log( "Button1 Laché" );
+    // });
+    // Button2.on("down", function() {
+    // console.log( "Button2 Préssé" );
+    // });
+    // Button2.on("up", function() {
+    // console.log( "Button2 Laché" );
+    // });
+    // Button3.on("down", function() {
+    // console.log( "Button3 Préssé" );
+    // });
+    // Button3.on("up", function() {
+    // console.log( "Button3 Laché" );
+    // });
+    // Button4.on("down", function() {
+    // console.log( "Button4 Préssé" );
+    // });
+    // Button4.on("up", function() {
+    // console.log( "Button4 Laché" );
+    // });
 
 });
 
