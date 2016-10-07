@@ -61,7 +61,34 @@ board.on("ready", function() {
     Button3 = new five.Button("A1");
     Button4 = new five.Button("A0");
 
+    Button1.on("down", function() {
+    console.log( "Button1 Préssé" );
+    });
+    Button1.on("up", function() {
+    console.log( "Button1 Laché" );
+    });
+    Button2.on("down", function() {
+    console.log( "Button2 Préssé" );
+    });
+    Button2.on("up", function() {
+    console.log( "Button2 Laché" );
+    });
+    Button3.on("down", function() {
+    console.log( "Button3 Préssé" );
+    });
+    Button3.on("up", function() {
+    console.log( "Button3 Laché" );
+    });
+    Button4.on("down", function() {
+    console.log( "Button4 Préssé" );
+    });
+    Button4.on("up", function() {
+    console.log( "Button4 Laché" );
+    });
+
 });
+
+
 
 //Socket connection handler
 io.on('connection', function (socket) {  

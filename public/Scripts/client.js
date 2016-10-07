@@ -27,7 +27,9 @@ var app = angular.module('myApp', ['btford.socket-io'])
     .controller('ArduController', ['$scope', 'socketio', function ($scope,socketio) {
 ////////////LIGHTS
             var lights;
-    
+            var buttons;
+
+            $scope.buttons = buttons;
             $scope.lights = lights;
             
             $scope.lightstatusOn = function(light){
