@@ -8,9 +8,8 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var port = 9000; 
 var led1,led2,led3,led4;
-var But1,But2,But3,But4;
 var ledData;
-var butData;
+var buttonData;
 // lights model 
 var lights = [          
             {id:'1', name:"Led1", status:"off", active:false},
@@ -20,11 +19,12 @@ var lights = [
             ];
 
 var buttons = [          
-            {id:'1', name:"But1", status:"off", active:false},
-            {id:'2', name:"But2", status:"off", active:false},
-            {id:'3', name:"But3", status:"off", active:false},
-            {id:'4', name:"But4", status:"off", active:false}
+            {id:'1', name:"Button1", status:"off", active:false},
+            {id:'2', name:"Button2", status:"off", active:false},
+            {id:'3', name:"Button3", status:"off", active:false},
+            {id:'4', name:"Button4", status:"off", active:false}
             ];
+
 
 var DEBUG = false; //Debugage -> console node + navigateur web
 
@@ -41,10 +41,6 @@ app.get('/lights', function(req,res){
     res.send(lights);
 });
 
-app.get('/boutons', function(req,res){
-    'use strict';
-    res.send(boutons);
-});
 
 httpServer.listen(port);  
 console.log('Serveur Disponible à http://localhost:' + port);  
@@ -59,11 +55,11 @@ board.on("ready", function() {
     Led3 = new five.Led(11);
     Led4 = new five.Led(10);
 
-    But1 = new five.Button("A3");
-    But2 = new five.Button("A2");
-    But3 = new five.Button("A1");
-    But4 = new five.Button("A0");
-
+    // Attached to an analog pin
+    Button1 = new five.Button("A3");
+    Button2 = new five.Button("A2");
+    Button3 = new five.Button("A1");
+    Button4 = new five.Button("A0");
 
 });
 
@@ -73,8 +69,6 @@ io.on('connection', function (socket) {
 
         io.sockets.emit('light', lights); //broadcast lights model
       
-            //console.log("fichier lights envoyé\n");
-            //console.log(lights);
 
         socket.on('lights.update', function(data){
           lights = data;
@@ -130,5 +124,6 @@ io.on('connection', function (socket) {
         console.log('Instruction ' + data + ' OFF reçue');
         io.sockets.emit('led:off', {value: ledData});
         });
+
 });
 console.log('En attente de la connection avec Arduino');

@@ -1,6 +1,6 @@
 var j5 = require("johnny-five");
-var board = new j5.Board({port: "COM6"});
-var LEDPIN = 3;
+var board = new j5.Board();
+var LEDPIN = 13;
 
 board.on("ready", function(){
   var led = new j5.Led(LEDPIN);

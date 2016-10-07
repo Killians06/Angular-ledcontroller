@@ -25,7 +25,7 @@ var app = angular.module('myApp', ['btford.socket-io'])
 }])
 
     .controller('ArduController', ['$scope', 'socketio', function ($scope,socketio) {
-    
+////////////LIGHTS
             var lights;
     
             $scope.lights = lights;
@@ -36,7 +36,7 @@ var app = angular.module('myApp', ['btford.socket-io'])
               socketio.emit('led:on', light.name);
               socketio.emit('active:false', light.name);
               socketio.emit("lights.update", $scope.lights); 
-              DEBUG && console.log($scope.lights);
+              //DEBUG && console.log($scope.lights);
             };
     
             $scope.lightstatusOff = function(light){
@@ -68,6 +68,7 @@ var app = angular.module('myApp', ['btford.socket-io'])
                   active: false
                 };
             });
-       
+////////////BUTTONS
+
     }]);
  
