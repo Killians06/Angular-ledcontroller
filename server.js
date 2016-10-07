@@ -66,37 +66,12 @@ board.on("ready", function() {
     });
 
     buttons.on("press", function(button) {
-        console.log("Pressed: ", button.pin);
+        console.log("Bouton", button.pin, "préssé");
     });
 
     buttons.on("release", function(button) {
-        console.log("Released: ", button.pin);
+        console.log("Bouton", button.pin, "relaché");
     });
-
-    // Button1.on("down", function() {
-    // console.log( "Button1 Préssé" );
-    // });
-    // Button1.on("up", function() {
-    // console.log( "Button1 Laché" );
-    // });
-    // Button2.on("down", function() {
-    // console.log( "Button2 Préssé" );
-    // });
-    // Button2.on("up", function() {
-    // console.log( "Button2 Laché" );
-    // });
-    // Button3.on("down", function() {
-    // console.log( "Button3 Préssé" );
-    // });
-    // Button3.on("up", function() {
-    // console.log( "Button3 Laché" );
-    // });
-    // Button4.on("down", function() {
-    // console.log( "Button4 Préssé" );
-    // });
-    // Button4.on("up", function() {
-    // console.log( "Button4 Laché" );
-    // });
 
 });
 
