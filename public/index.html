@@ -1,0 +1,32 @@
+ 
+<!DOCTYPE html>  
+<html lang="fr" ng-app="myApp" class="no-js"> <!--<![endif]-->  
+<head>  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Led Controller - Killians Streibel-Oscoso</title>
+  <script src="/bower_components/socket.io-client/socket.io.js"></script>
+  <script src="/bower_components/angular/angular.js"></script>  
+  <script src="/bower_components/angular-socket-io/socket.js"></script>
+  <script src="Scripts\client.js"></script>
+  <link rel="stylesheet" href="styles/bootstrap.css">
+
+</head> 
+
+<body> 
+  <h3 align="center">{{"Led controller"}}</h3>
+    <div ng-controller="ArduController" class="panel-heading">
+      <div ng-repeat="light in lights" class="panel-footer">
+        <h4>La {{ light.name }} est :</h4>
+        <div ng-if="!light.active">
+           <button id="{{ light.name }}" class="btn btn-danger btn-lg" ng-click="lightstatusOn(light)"> {{ light.status }} </button>
+        </div>
+        <div ng-if="light.active">
+          <button class="btn btn-success btn-lg" ng-click="lightstatusOff(light)"> {{ light.status }} </button>
+        </div>
+      </div>
+    </div> 
+</body>
+
+ 
+ 

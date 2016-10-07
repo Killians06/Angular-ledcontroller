@@ -1,0 +1,21 @@
+{
+  "name": "Angular Led Controller",
+  "version": "1.0.0",
+  "description": "WebApp controllant un arduino, 2-way-data-binding, Socket.io, AngularJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Killians06/Angular-ledcontroller/"
+  },
+  "author": "Killians Streibel-Oscoso",
+  "license": "",
+  "dependencies": {
+    "express": "^4.13.3",
+    "johnny-five": "^0.9.17",
+    "socket.io": "^1.4.3"
+  }
+}
