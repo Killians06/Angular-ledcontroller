@@ -2,7 +2,6 @@ var app = angular.module('myApp', ['btford.socket-io'])
   .factory('socketio', ['$rootScope', function ($rootScope) {
     var socket = io.connect();
     var active = false;
-    var click = false;
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {  
@@ -37,7 +36,6 @@ var app = angular.module('myApp', ['btford.socket-io'])
               socketio.emit('led:on', light.name);
               socketio.emit('active:false', light.name);
               socketio.emit("lights.update", $scope.lights); 
-              //DEBUG && console.log($scope.lights);
             };
     
             $scope.lightstatusOff = function(light){
@@ -70,5 +68,16 @@ var app = angular.module('myApp', ['btford.socket-io'])
                 };
             });
 ////////////BUTTONS
+            var arrcompte;
+            $scope.arrcompte = arrcompte;
+
+            $scope.arrcompte = function(compteurs){
+            socketio.emit("arrcompte.update", $scope.arrcompte);
+            };
+
+            socketio.on('compteurs', function (data) {
+              console.table(data);
+            });
+
     }]);
  

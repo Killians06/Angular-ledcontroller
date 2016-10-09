@@ -19,6 +19,11 @@ var lights = [
             {id:'4', name:"Led4", status:"off", active:false}
             ];
 
+arrcompte = {
+            id: ["compteur1", "compteur2", "compteur3", "compteur4"],
+            valeur: [0, 0, 0, 0]
+            }
+
 
 var DEBUG = false; //Debugage -> console node + navigateur web
 
@@ -53,12 +58,8 @@ board.on("ready", function() {
     Led3 = new five.Led(11);
     Led4 = new five.Led(10);
 
-
-    var ArrCompte = {
-                id: ["compteur1", "compteur2", "compteur3", "compteur4"],
-                valeur: [0, 0, 0, 0]
-                    }
-                //console.log(ArrCompte.valeur[2]);
+    
+                //console.log(arrcompte.valeur[2]);
 
 
     buttons = new five.Buttons([
@@ -74,20 +75,20 @@ board.on("ready", function() {
         //console.log(buttonData);
         switch(buttonData){
             case 'Button1':
-                ++ArrCompte.valeur[0];
+                ++arrcompte.valeur[0];
                 break;
             case 'Button2':
-                ++ArrCompte.valeur[1];
+                ++arrcompte.valeur[1];
                 break;
             case 'Button3':
-                ++ArrCompte.valeur[2];
+                ++arrcompte.valeur[2];
                 break;
             case 'Button4':
-                ++ArrCompte.valeur[3];
+                ++arrcompte.valeur[3];
                 break;
         };
         //console.log(compte1, compte2, compte3, compte4);
-        console.log(ArrCompte.valeur);
+        console.log(arrcompte.valeur);
     }); 
 
 });
@@ -98,7 +99,9 @@ board.on("ready", function() {
 io.on('connection', function (socket) {  
         console.log('Nouveau Client connecté ID: ' + socket.id);
 
+
         io.sockets.emit('light', lights); //broadcast lights model
+        io.sockets.emit('compteurs', arrcompte); //broadcast lights model
       
 
         socket.on('lights.update', function(data){
@@ -155,6 +158,12 @@ io.on('connection', function (socket) {
         console.log('Instruction ' + data + ' OFF reçue');
         io.sockets.emit('led:off', {value: ledData});
         });
+
+        socket.on('arrcompte.update', function(data){
+          arrcompte = data;
+          io.sockets.emit('compteurs', arrcompte); //broadcast lights model
+            //console.log(data);
+        })
 
 });
 console.log('En attente de la connection avec Arduino');
