@@ -6,10 +6,11 @@ var io=require('socket.io')(httpServer);
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({extended: false});
-var port = 9000; 
+var port = 9000;
 var led1,led2,led3,led4;
 var ledData;
 var buttonData;
+
 // lights model 
 var lights = [          
             {id:'1', name:"Led1", status:"off", active:false},
@@ -18,15 +19,8 @@ var lights = [
             {id:'4', name:"Led4", status:"off", active:false}
             ];
 
-// var buttons = [          
-//             {id:'1', name:"Button1", status:"off", active:false},
-//             {id:'2', name:"Button2", status:"off", active:false},
-//             {id:'3', name:"Button3", status:"off", active:false},
-//             {id:'4', name:"Button4", status:"off", active:false}
-//             ];
 
-
-var DEBUG = true; //Debugage -> console node + navigateur web
+var DEBUG = false; //Debugage -> console node + navigateur web
 
 
 app.use(express.static(__dirname + '/public'));
@@ -39,6 +33,10 @@ app.get('/', function(req, res) {
 app.get('/lights', function(req,res){
     'use strict';
     res.send(lights);
+});
+app.get('/buttons', function(req,res){
+    'use strict';
+    res.send(buttons);
 });
 
 
@@ -55,23 +53,39 @@ board.on("ready", function() {
     Led3 = new five.Led(11);
     Led4 = new five.Led(10);
 
-    // // Attached to an analog pin
-    // Button1 = new five.Button("A3");
-    // Button2 = new five.Button("A2");
-    // Button3 = new five.Button("A1");
-    // Button4 = new five.Button("A0");
 
-    buttons = new five.Buttons({
-    pins: ["A3", "A2", "A1", "A0"],
-    });
+    var compte1 = 0,
+        compte2 = 0,
+        compte3 = 0,
+        compte4 = 0;
+
+    buttons = new five.Buttons([
+        { id: "Button1", pin: "A3" },
+        { id: "Button2", pin: "A2" },
+        { id: "Button3", pin: "A1" },
+        { id: "Button4", pin: "A0" }
+    ]);
 
     buttons.on("press", function(button) {
-        console.log("Bouton", button.pin, "préssé");
-    });
-
-    buttons.on("release", function(button) {
-        console.log("Bouton", button.pin, "relaché");
-    });
+        //console.log(button.id, button.pin, button.upValue, button.downValue);
+        buttonData = button.id;
+        //console.log(buttonData);
+        switch(buttonData){
+            case 'Button1':
+                ++compte1;
+                break;
+            case 'Button2':
+                ++compte2;
+                break;
+            case 'Button3':
+                ++compte3;
+                break;
+            case 'Button4':
+                ++compte4;
+                break;
+        };
+        console.log(compte1, compte2, compte3, compte4);
+    }); 
 
 });
 
@@ -96,19 +110,19 @@ io.on('connection', function (socket) {
             switch(ledData){
               case 'Led1':
                 Led1.on();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
               case 'Led2':
                 Led2.on();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
                 case 'Led3':
                 Led3.on();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
               case 'Led4':
                 Led4.on();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
             }                   
         console.log('Instruction ' + data + ' ON reçue');
@@ -120,19 +134,19 @@ io.on('connection', function (socket) {
             switch(ledData){
               case 'Led1':
                 Led1.off();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
               case 'Led2':
                 Led2.off();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
                 case 'Led3':
                 Led3.off();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
               case 'Led4':
                 Led4.off();
-                DEBUG && console.log(ledData);
+                //DEBUG && console.log(ledData);
                 break;
             }
         console.log('Instruction ' + data + ' OFF reçue');

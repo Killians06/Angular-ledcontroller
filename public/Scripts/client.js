@@ -2,6 +2,7 @@ var app = angular.module('myApp', ['btford.socket-io'])
   .factory('socketio', ['$rootScope', function ($rootScope) {
     var socket = io.connect();
     var active = false;
+    var click = false;
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {  
@@ -27,7 +28,7 @@ var app = angular.module('myApp', ['btford.socket-io'])
     .controller('ArduController', ['$scope', 'socketio', function ($scope,socketio) {
 ////////////LIGHTS
             var lights;
-    
+
             $scope.lights = lights;
             
             $scope.lightstatusOn = function(light){
@@ -69,6 +70,5 @@ var app = angular.module('myApp', ['btford.socket-io'])
                 };
             });
 ////////////BUTTONS
-
     }]);
  
