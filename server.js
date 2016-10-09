@@ -39,10 +39,6 @@ app.get('/lights', function(req,res){
     'use strict';
     res.send(lights);
 });
-app.get('/buttons', function(req,res){
-    'use strict';
-    res.send(buttons);
-});
 
 
 httpServer.listen(port);  
@@ -88,7 +84,9 @@ board.on("ready", function() {
                 break;
         };
         //console.log(compte1, compte2, compte3, compte4);
-        console.log(compteurs.valeur);
+        io.sockets.emit('compteur', compteurs); //broadcast lights model
+        //console.log(compteurs.valeur);
+        
     }); 
 
 });
@@ -101,17 +99,15 @@ io.on('connection', function (socket) {
 
 
         io.sockets.emit('light', lights); //broadcast lights model
+        io.sockets.emit('compteur', compteurs); //broadcast compteur model
       
-
         socket.on('lights.update', function(data){
           lights = data;
-          io.sockets.emit('light', lights); //broadcast lights model
             //console.log(data);
         })
       
         socket.on('led:on', function (data) {
           ledData = data;
-          //lights = {$set:{'lights.$.name':ledData,'lights.$.status':'on'}};
             switch(ledData){
               case 'Led1':
                 Led1.on();
@@ -158,15 +154,6 @@ io.on('connection', function (socket) {
         io.sockets.emit('led:off', {value: ledData});
         });
 
-///////////////////
-
-        io.sockets.emit('compteur', compteurs); //broadcast lights model
-
-        socket.on('compteurs.update', function(data){
-          compteurs = data;
-          io.sockets.emit('compteur', compteurs); //broadcast lights model
-            //console.log(data);
-        })
 
 });
 console.log('En attente de la connection avec Arduino');

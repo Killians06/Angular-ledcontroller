@@ -72,17 +72,19 @@ var app = angular.module('myApp', ['btford.socket-io'])
             $scope.compteurs = compteurs;
 
             $scope.compteurs = function(compteur){
-            socketio.emit("compteurs.update", $scope.compteurs);
+            socketio.emit("compteurs.update", compteurs);
+            console.log(compteur);
             };
 
             socketio.on('compteur', function (data) {
               $scope.compteurs = data;
+              console.log(data);
             });
 
-            socketio.on('button:press', function(data){
-                $scope.lights[data.value] = {       
+            socketio.on('compteur', function(data){
+                $scope.compteurs[data] = data;       
 
-                }});           
+                });           
 
 
     }]);
