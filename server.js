@@ -54,10 +54,12 @@ board.on("ready", function() {
     Led4 = new five.Led(10);
 
 
-    var compte1 = 0,
-        compte2 = 0,
-        compte3 = 0,
-        compte4 = 0;
+    var ArrCompte = {
+                id: ["compteur1", "compteur2", "compteur3", "compteur4"],
+                valeur: [0, 0, 0, 0]
+                    }
+                //console.log(ArrCompte.valeur[2]);
+
 
     buttons = new five.Buttons([
         { id: "Button1", pin: "A3" },
@@ -72,19 +74,20 @@ board.on("ready", function() {
         //console.log(buttonData);
         switch(buttonData){
             case 'Button1':
-                ++compte1;
+                ++ArrCompte.valeur[0];
                 break;
             case 'Button2':
-                ++compte2;
+                ++ArrCompte.valeur[1];
                 break;
             case 'Button3':
-                ++compte3;
+                ++ArrCompte.valeur[2];
                 break;
             case 'Button4':
-                ++compte4;
+                ++ArrCompte.valeur[3];
                 break;
         };
-        console.log(compte1, compte2, compte3, compte4);
+        //console.log(compte1, compte2, compte3, compte4);
+        console.log(ArrCompte.valeur);
     }); 
 
 });
