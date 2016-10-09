@@ -19,7 +19,7 @@ var lights = [
             {id:'4', name:"Led4", status:"off", active:false}
             ];
 
-arrcompte = {
+compteurs = {
             id: ["compteur1", "compteur2", "compteur3", "compteur4"],
             valeur: [0, 0, 0, 0]
             }
@@ -59,7 +59,7 @@ board.on("ready", function() {
     Led4 = new five.Led(10);
 
     
-                //console.log(arrcompte.valeur[2]);
+                //console.log(compteurs.valeur[2]);
 
 
     buttons = new five.Buttons([
@@ -75,20 +75,20 @@ board.on("ready", function() {
         //console.log(buttonData);
         switch(buttonData){
             case 'Button1':
-                ++arrcompte.valeur[0];
+                ++compteurs.valeur[0];
                 break;
             case 'Button2':
-                ++arrcompte.valeur[1];
+                ++compteurs.valeur[1];
                 break;
             case 'Button3':
-                ++arrcompte.valeur[2];
+                ++compteurs.valeur[2];
                 break;
             case 'Button4':
-                ++arrcompte.valeur[3];
+                ++compteurs.valeur[3];
                 break;
         };
         //console.log(compte1, compte2, compte3, compte4);
-        console.log(arrcompte.valeur);
+        console.log(compteurs.valeur);
     }); 
 
 });
@@ -101,7 +101,6 @@ io.on('connection', function (socket) {
 
 
         io.sockets.emit('light', lights); //broadcast lights model
-        io.sockets.emit('compteurs', arrcompte); //broadcast lights model
       
 
         socket.on('lights.update', function(data){
@@ -159,9 +158,13 @@ io.on('connection', function (socket) {
         io.sockets.emit('led:off', {value: ledData});
         });
 
-        socket.on('arrcompte.update', function(data){
-          arrcompte = data;
-          io.sockets.emit('compteurs', arrcompte); //broadcast lights model
+///////////////////
+
+        io.sockets.emit('compteur', compteurs); //broadcast lights model
+
+        socket.on('compteurs.update', function(data){
+          compteurs = data;
+          io.sockets.emit('compteur', compteurs); //broadcast lights model
             //console.log(data);
         })
 

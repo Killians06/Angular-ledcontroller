@@ -68,16 +68,22 @@ var app = angular.module('myApp', ['btford.socket-io'])
                 };
             });
 ////////////BUTTONS
-            var arrcompte;
-            $scope.arrcompte = arrcompte;
+            var compteurs;
+            $scope.compteurs = compteurs;
 
-            $scope.arrcompte = function(compteurs){
-            socketio.emit("arrcompte.update", $scope.arrcompte);
+            $scope.compteurs = function(compteur){
+            socketio.emit("compteurs.update", $scope.compteurs);
             };
 
-            socketio.on('compteurs', function (data) {
-              console.table(data);
+            socketio.on('compteur', function (data) {
+              $scope.compteurs = data;
             });
+
+            socketio.on('button:press', function(data){
+                $scope.lights[data.value] = {       
+
+                }});           
+
 
     }]);
  
